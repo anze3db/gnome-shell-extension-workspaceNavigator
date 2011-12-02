@@ -20,13 +20,10 @@ function injectToFunction(parent, name, func) {
     return origin;
 }
 
-let winInjections, workspaceInjections, workViewInjections, createdActors, connectedSignals;
+let workViewInjections, connectedSignals;
 
 function resetState() {
-    winInjections = { };
-    workspaceInjections = { };
     workViewInjections = { };
-    createdActors = [ ];
     connectedSignals = [ ];
 }
 
@@ -74,18 +71,12 @@ function removeInjection(object, injection, name) {
 }
 
 function disable() {
-    for (i in workspaceInjections)
-        removeInjection(Workspace.Workspace.prototype, workspaceInjections, i);
-    for (i in winInjections)
-        removeInjection(Workspace.WindowOverlay.prototype, winInjections, i);
-    for (i in workViewInjections)
+    
+for (i in workViewInjections)
         removeInjection(WorkspacesView.WorkspacesView.prototype, workViewInjections, i);
 
     for each (i in connectedSignals)
         i.obj.disconnect(i.id);
-
-    for each (i in createdActors)
-        i.destroy();
 
     resetState();
 }
