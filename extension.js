@@ -32,12 +32,12 @@ function enable() {
 
     WorkspacesView.WorkspacesView.prototype._onKeyPress = function(s, o) {
         
-        if(o.get_key_symbol() == Clutter.KEY_Down){
+        if(o.get_key_symbol() == Clutter.KEY_Down || o.get_key_symbol() == Clutter.KEY_Left){
         	let workspace = this._workspaces[(global.screen.get_active_workspace_index()+1)%this._workspaces.length];
             if (workspace !== undefined)
                 workspace.metaWorkspace.activate(global.get_current_time());
         }
-        if(o.get_key_symbol() == Clutter.KEY_Up){
+        if(o.get_key_symbol() == Clutter.KEY_Up || o.get_key_symbol() == Clutter.KEY_Right){
         	let index = global.screen.get_active_workspace_index()-1;
         	if (index < 0) index = this._workspaces.length-1;
         	let workspace = this._workspaces[index];
