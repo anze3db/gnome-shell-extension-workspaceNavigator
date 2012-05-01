@@ -32,20 +32,27 @@ function enable() {
 
     WorkspacesView.WorkspacesView.prototype._wn_onKeyPress = function(s, o) {
         
-        if(o.get_key_symbol() == Clutter.KEY_Down || o.get_key_symbol() == Clutter.KEY_Right){
-        	let workspace = this._workspaces[(global.screen.get_active_workspace_index()+1)%this._workspaces.length];
+        var symbol = o.get_key_symbol();
+        let modiferState = o.get_state(o);
+        let ModifierType = Clutter.ModifierType;
+        if(modiferState & (ModifierType.SHIFT_MASK | ModifierType.CONTROL_MASK | ModifierType.META_MASK)) {
+            return false;
+        }
+
+        if(symbol == Clutter.KEY_Down || symbol == Clutter.KEY_Right || symbol == Clutter.Page_Down){
+            let workspace = this._workspaces[(global.screen.get_active_workspace_index()+1)%this._workspaces.length];
             if (workspace !== undefined)
                 workspace.metaWorkspace.activate(global.get_current_time());
         }
-        if(o.get_key_symbol() == Clutter.KEY_Up || o.get_key_symbol() == Clutter.KEY_Left){
-        	let index = global.screen.get_active_workspace_index()-1;
-        	if (index < 0) index = this._workspaces.length-1;
-        	let workspace = this._workspaces[index];
+        if(symbol == Clutter.KEY_Up || symbol == Clutter.KEY_Left || symbol == Clutter.Page_Up){
+            let index = global.screen.get_active_workspace_index()-1;
+            if (index < 0) index = this._workspaces.length-1;
+            let workspace = this._workspaces[index];
             if (workspace !== undefined)
                 workspace.metaWorkspace.activate(global.get_current_time());
         }
-        if (o.get_key_symbol() == Clutter.KEY_Return){
-        	Main.overview.hide();
+        if (symbol == Clutter.KEY_Return){
+            Main.overview.hide();
         }
 
         return false;
