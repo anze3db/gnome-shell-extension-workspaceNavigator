@@ -60,9 +60,11 @@ function enable() {
     workViewInjections['_wn_onKeyPress'] = undefined;
 
     workViewInjections['_init'] = injectToFunction(WorkspacesView.WorkspacesView.prototype, '_init', function(width, height, x, y, workspaces) {
-        _keyPressEventId = global.stage.connect('key-press-event', Lang.bind(this, this._wn_onKeyPress));
+        if(connectedSignals.length == 0) {
+            _keyPressEventId = global.stage.connect('key-press-event', Lang.bind(this, this._wn_onKeyPress));
         
-        connectedSignals.push({ obj: global.stage, id: _keyPressEventId });
+            connectedSignals.push({ obj: global.stage, id: _keyPressEventId });
+        }
     });
 
     workViewInjections['_onDestroy'] = injectToFunction(WorkspacesView.WorkspacesView.prototype, '_onDestroy', function() {
