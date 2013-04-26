@@ -6,5 +6,5 @@
     "name": "Workspace Navigator",
     "description": "Allow selection of workspaces with up and down arrow keys in overlay mode",
     "url": "http://github.com/Smotko/gnome-shell-extension-workspaceNavigator",
-    "version": "1.6"
+    "version": "1.7"
 }

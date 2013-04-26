@@ -39,18 +39,34 @@ function enable() {
             return false;
         }
 
-        if(symbol == Clutter.KEY_Down || symbol == Clutter.KEY_Right || symbol == Clutter.Page_Down){
-            let workspace = this._workspaces[(global.screen.get_active_workspace_index()+1)%this._workspaces.length];
-            if (workspace !== undefined)
-                workspace.metaWorkspace.activate(global.get_current_time());
+
+        const WorkspaceGrid = global.screen.workspace_grid;
+        if(WorkspaceGrid){
+            if(symbol == Clutter.KEY_Down)
+                WorkspaceGrid.moveWorkspace(WorkspaceGrid.Directions.DOWN);
+            if(symbol == Clutter.KEY_Up)
+                WorkspaceGrid.moveWorkspace(WorkspaceGrid.Directions.UP);
+            if(symbol == Clutter.KEY_Left)
+                WorkspaceGrid.moveWorkspace(WorkspaceGrid.Directions.LEFT);
+            if(symbol == Clutter.KEY_Right)
+                WorkspaceGrid.moveWorkspace(WorkspaceGrid.Directions.RIGHT);
+    
         }
-        if(symbol == Clutter.KEY_Up || symbol == Clutter.KEY_Left || symbol == Clutter.Page_Up){
-            let index = global.screen.get_active_workspace_index()-1;
-            if (index < 0) index = this._workspaces.length-1;
-            let workspace = this._workspaces[index];
-            if (workspace !== undefined)
-                workspace.metaWorkspace.activate(global.get_current_time());
+        else{
+            if(symbol == Clutter.KEY_Down || symbol == Clutter.KEY_Right || symbol == Clutter.Page_Down){
+                let workspace = this._workspaces[(global.screen.get_active_workspace_index()+1)%this._workspaces.length];
+                if (workspace !== undefined)
+                    workspace.metaWorkspace.activate(global.get_current_time());
+            }
+            if(symbol == Clutter.KEY_Up || symbol == Clutter.KEY_Left || symbol == Clutter.Page_Up){
+                let index = global.screen.get_active_workspace_index()-1;
+                if (index < 0) index = this._workspaces.length-1;
+                let workspace = this._workspaces[index];
+                if (workspace !== undefined)
+                    workspace.metaWorkspace.activate(global.get_current_time());
+            }    
         }
+        
         if (symbol == Clutter.KEY_Return){
             Main.overview.hide();
         }
