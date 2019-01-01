@@ -101,7 +101,7 @@ function disable() {
     for (i in workViewInjections)
         removeInjection(WorkspacesView.WorkspacesView.prototype, workViewInjections, i);
 
-    for each (i in connectedSignals)
+    for (i in connectedSignals)
         i.obj.disconnect(i.id);
 
     resetState();
